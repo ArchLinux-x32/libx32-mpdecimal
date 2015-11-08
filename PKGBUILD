@@ -1,0 +1,28 @@
+# $Id: PKGBUILD 221617 2014-09-13 11:13:02Z fyan $
+# Maintainer: Felix Yan <felixonmars@gmail.com>
+
+pkgname=mpdecimal
+pkgver=2.4.1
+pkgrel=1
+pkgdesc="Package for correctly-rounded arbitrary precision decimal floating point arithmetic"
+arch=('i686' 'x86_64')
+url="http://www.bytereef.org/mpdecimal/index.html"
+license=('custom')
+depends=('glibc')
+source=(http://www.bytereef.org/software/${pkgname}/releases/${pkgname}-${pkgver}.tar.gz)
+
+build() {
+  cd ${pkgname}-${pkgver}
+
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  make DESTDIR="${pkgdir}" install
+
+  install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/$pkgname/LICENSE.txt"
+}
+
+sha512sums=('60073ec82faff1ef9a5955a98f7f1320b044ff03bf8589bfe139b4721ae44c943e16bb36e1e61d9c6016529ba460d879bcbb17ea17cd875b27caa7caea211d45')
